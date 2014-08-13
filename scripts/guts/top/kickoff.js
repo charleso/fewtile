@@ -17,7 +17,7 @@ define(
     var single = util.objectMap(view, function(v) {
       return function() {
         var element = $orDie(".fewtile")
-        if (typeof v === 'function') {
+        if (typeof v === 'function' && arguments.length > 0) {
             v = v.apply(this, arguments);
         }
         v(board(element));

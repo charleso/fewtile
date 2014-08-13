@@ -17,6 +17,9 @@ define(
     var single = util.objectMap(view, function(v) {
       return function() {
         var element = $orDie(".fewtile")
+        if (typeof v === 'function') {
+            v = v.apply(this, arguments);
+        }
         v(board(element));
       };
     });
@@ -32,6 +35,7 @@ define(
 
     var open = function(qs, element) {
         qs == "?allJobs"       ? single.allJobs()
+      : qs == "?viewJobs"      ? single.viewJobs(document.location.hash.substring(1))
       : qs == "?failingJobs"   ? single.failingJobs()
       : qs == "?buildingJobs"  ? single.buildingJobs()
       : qs == "?allGroups"     ? single.allGroups()

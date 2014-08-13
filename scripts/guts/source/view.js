@@ -15,6 +15,7 @@ define(['guts/source/poller', 'guts/source/sources', 'guts/source/ajaxer'], func
 
   return {
     allJobs:      mk(sources.allJobs),
+    viewJobs:     function(view) { return mk(sources.viewJobs(view)); },
     buildingJobs: mk(sources.buildingJobs),
     failingJobs:  mk(sources.failingJobs),
     allGroups:    mk(sources.allGroups)

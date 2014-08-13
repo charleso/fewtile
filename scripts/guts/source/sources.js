@@ -13,9 +13,9 @@ define(['underscore', 'guts/struct/tile', 'guts/source/colorMap', 'guts/mashing/
     return q.length === 0 ? [o] : q;
   };
 
-  var jobbie = function(emptyTile, filterer) {
+  var jobbie = function(emptyTile, filterer, view) {
     return {
-      url: "/api/json?tree=jobs[name,color]",
+      url: (view ? "/view/" + view : "") + "/api/json?tree=jobs[name,color]",
       clickUrl: "/job/",
       handle: function(data) {
         return flonkle(data.jobs, emptyTile, function(jobs) {
@@ -32,6 +32,10 @@ define(['underscore', 'guts/struct/tile', 'guts/source/colorMap', 'guts/mashing/
   };
 
   var allJobs = jobbie(overarching.noJobs, konst(true));
+
+  function viewJobs(view) {
+    return jobbie(overarching.noJobs, konst(true), view);
+  }
 
   var failingJobs = jobbie(overarching.allPassing, function(status) { return !status.isPassing; });
 
@@ -97,6 +101,7 @@ define(['underscore', 'guts/struct/tile', 'guts/source/colorMap', 'guts/mashing/
 
   return {
     allJobs: allJobs,
+    viewJobs: viewJobs,
     buildingJobs: buildingJobs,
     failingJobs: failingJobs,
     allGroups: allGroups
